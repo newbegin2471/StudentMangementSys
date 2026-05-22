@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "gcc 多文件编译",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "if not exist \"${workspaceFolder}\\output\" mkdir \"${workspaceFolder}\\output\" && C:\\mingw\\bin\\gcc.exe -g ${workspaceFolder}\\*.c -o ${workspaceFolder}\\output\\main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
