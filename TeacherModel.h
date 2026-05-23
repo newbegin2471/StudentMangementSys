@@ -4,7 +4,7 @@
 /*定义老师信息结构体*/
 typedef struct Teacher{
     char name[N];
-    char passWord[PASS];
+    char passWord[N];
     int id;
     int gender;
     BirthDate birth;
@@ -23,9 +23,13 @@ TeaNode *newNode_t(Teacher data);
 /*销毁一个指定节点*/
 int delNode_t(TeaNode *t,int id);
 /*头插法插入节点*/
-int insertNode_t(TeaNode *t,Teacher data);
+int insertNodeInHead_t(TeaNode *t,Teacher data);
+/*尾插法插入节点*/
+int insertNodeInTail_t(TeaNode *t,Teacher data);
 /*修改登陆密码*/
-int changePassword_t(TeaNode *t,char *password);
+int changePassword_t(TeaNode *t,int id,char *password);
 /*修改姓名*/
-int changeName_t(TeaNode *t,char *name);
+int changeName_t(TeaNode *t,int id,char *name);
+/*遍历链表*/
+void travelLinkList_t(TeaNode *t);
 #endif

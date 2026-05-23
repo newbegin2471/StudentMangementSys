@@ -6,7 +6,7 @@ typedef struct Student{
     char password[N];
     int id;
     int gender;
-    BirthDate data;
+    BirthDate date;
     float math;
     float chinese;
     float english;
@@ -26,8 +26,12 @@ StuNode *newNode_s(Stu data);
 int delNode_s(StuNode *s,int id);
 /*头插法插入节点*/
 int insertNodeInHead_s(StuNode *s,Stu data);
+/*尾插法插入节点*/
+int insertNodeInTail_s(StuNode *s,Stu data);
 /*修改登陆密码*/
-int changePassword(StuNode *s,char *password);
+int changePassword(StuNode *s,int id,char *password);
 /*修改姓名*/
-int changeName(StuNode *s,char *name);
+int changeName(StuNode *s,int id,char *name);
+/*遍历链表*/
+void travelList_s(StuNode *s);
 #endif
