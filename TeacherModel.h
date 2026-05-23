@@ -26,10 +26,12 @@ int delNode_t(TeaNode *t,int id);
 int insertNodeInHead_t(TeaNode *t,Teacher data);
 /*尾插法插入节点*/
 int insertNodeInTail_t(TeaNode *t,Teacher data);
-/*修改登陆密码*/
-int changePassword_t(TeaNode *t,int id,char *password);
-/*修改姓名*/
-int changeName_t(TeaNode *t,int id,char *name);
+/*根据id查找节点*/
+TeaNode *findNodeByID_t(TeaNode *t,int id);
 /*遍历链表*/
 void travelLinkList_t(TeaNode *t);
+/*从文件中读取信息到链表里面*/
+int loadTeacherFromFile(TeaNode *t,const char *filename);
+/*把链表信息写入文件*/
+int saveTeacherToFile(TeaNode *t,const char *filename);
 #endif

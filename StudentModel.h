@@ -28,10 +28,12 @@ int delNode_s(StuNode *s,int id);
 int insertNodeInHead_s(StuNode *s,Stu data);
 /*尾插法插入节点*/
 int insertNodeInTail_s(StuNode *s,Stu data);
-/*修改登陆密码*/
-int changePassword(StuNode *s,int id,char *password);
-/*修改姓名*/
-int changeName(StuNode *s,int id,char *name);
+/*根据id查找，找到返回指向节点指针*/
+StuNode *findNodeByID_s(StuNode *s,int id);
+/*把链表信息写入文件*/
+int saveStudentToFile(StuNode *s,const char *filename);
+/*从文件中读取信息到链表里面*/
+int loadStudentFromFile(StuNode *s,const char *filename);
 /*遍历链表*/
-void travelList_s(StuNode *s);
+void travelLinkList_s(StuNode *s);
 #endif

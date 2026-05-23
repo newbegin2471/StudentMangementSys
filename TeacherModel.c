@@ -68,26 +68,20 @@ int insertNodeInTail_t(TeaNode *t,Teacher data){
     node->next=NULL;
     return 1;
 }
-/*修改登陆密码*/
-int changePassword_t(TeaNode *t,int id,char *password){
-    while(t->next!=NULL){
-        if(t->data.id==id){
-            strcpy(t->data.passWord,password);
-            return 0;
+/*根据id查找节点*/
+TeaNode *findNodeByID_t(TeaNode *t,int id){
+    if(t==NULL){
+        printf("链表为空\n");
+        return NULL;
+    }
+    TeaNode *p=t->next;
+    while(p!=NULL){
+        if(p->data.id==id){
+            return p;
         }
-        t=t->next;
+        p=p->next;
     }
-    return -1;
-}
-/*修改姓名*/
-int changeName_t(TeaNode *t,int id,char *name){
-    while(t->next!=NULL){
-        if(t->data.id==id){
-            strcpy(t->data.name,name);
-            return 0;
-        }   
-    }
-    return -1;
+    return NULL;
 }
 /*遍历链表*/
 void travelLinkList_t(TeaNode *t){
@@ -101,4 +95,44 @@ void travelLinkList_t(TeaNode *t){
         printf("%d ",t->data.birth.month);
         printf("%d\n",t->data.birth.day);
     }
+}
+/*从文件中读取信息到链表里面*/
+int  loadTeacherFromFile(TeaNode *t,const char *filename){
+    if(t==NULL){
+        return -1;
+    }
+    //统计读了几条
+    int count=0;
+    FILE *fp=fopen(filename,"r");
+    if(fp==NULL){
+        printf("open file error\n");
+        return -1;
+    }
+    Teacher temp;
+    while(fread(&temp,sizeof(Teacher),1,fp)==1){
+        insertNodeInTail_t(t,temp);
+        count++;
+    }
+    fclose(fp);
+    fp=NULL;
+    return count;
+}
+/*把链表信息写入文件*/
+int saveTeacherToFile(TeaNode *t,const char *filename){
+    if(t==NULL){
+        return -1;
+    }
+    FILE *fp=fopen(filename,"w");
+    if(fp==NULL){
+        printf("open file error\n");
+        return -1;
+    }
+    TeaNode *p=t->next;
+    while(p!=NULL){
+        fwrite(&p->data,sizeof(p->data),1,fp);
+        p=p->next;
+    }
+    fclose(fp);
+    fp=NULL;
+    return 1;
 }

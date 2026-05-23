@@ -67,8 +67,62 @@ int insertNodeInTail_s(StuNode *s,Stu data){
     s->next=node;
     return 1;
 }
+/*根据id查找，找到返回指向节点指针*/
+StuNode *findNodeByID_s(StuNode *s,int id){
+    if(s==NULL){
+        printf("链表为空\n");
+        return NULL;
+    }
+    StuNode *p=s->next;
+    while(p!=NULL){
+        if(p->data.id==id){
+            return p;
+        }
+        p=p->next;
+    }
+    return NULL;
+}
+/*把链表信息写入文件*/
+int saveStudentToFile(StuNode *s,const char *filename){
+    if(s==NULL){
+        printf("链表为空\n");
+        return -1;
+    }
+    FILE *fp=fopen(filename,"w");
+    if(fp==NULL){
+        printf("open file error\n");
+        return -1;
+    }
+    StuNode *p=s->next;
+    while(p!=NULL){
+        fwrite(&p->data,sizeof(p->data),1,fp);
+        p=p->next;
+    }
+    fclose(fp);
+    fp=NULL;
+    return 1;
+}
+/*从文件中读取信息到链表里面*/
+int loadStudentFromFile(StuNode *s,const char *filename){
+    if(s==NULL){
+        printf("链表为空\n");
+        return -1;
+    }
+    int count =0;
+    FILE *fp=fopen(filename,"r");
+    if(fp==NULL){
+        printf("open file error\n");
+        return -1;
+    }
+    Stu temp;
+    while(fread(&temp,sizeof(temp),1,fp)==1){
+        insertNodeInTail_s(s,temp);
+        count++;
+    }
+    return count;
+}
 /*遍历链表*/
-void travelList_s(StuNode *s){
+void travelLinkList_s(StuNode *s){
     while(s->next!=NULL){
         s=s->next;
         printf("%s ",s->data.name);
@@ -83,9 +137,3 @@ void travelList_s(StuNode *s){
         printf("%f\n",s->data.english);
     }
 }
-// /*修改登陆密码*/
-// int changePassword(StuNode *s,int id,char *password){
-
-// }
-// /*修改姓名*/
-// int changeName(StuNode *s,int id,char *name);

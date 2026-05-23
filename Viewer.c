@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <windows.h>
 /*打印主界面*/
 void printMainPage(){
     printf("==================================\n");
