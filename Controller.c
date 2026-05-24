@@ -6,62 +6,9 @@
 #include <conio.h>
 #include <stdlib.h>
 void adminPage();
-
+void teacherLogin();
+void studentLogin();
 int main(){
-    /**********************************链表测试 *************************** */
-    //创建空教师链表
-    // TeaNode *t=createLinkList_t();
-    // // Teacher test={"123456","123456",1,1,{2002,10,13}};
-    // insertNodeInTail_t(t,(Teacher){"123456","123456",1,1,{2002,10,13}});
-    // insertNodeInTail_t(t,(Teacher){"123456","123456",2,1,{2002,10,13}});
-    // insertNodeInTail_t(t,(Teacher){"123456","123456",3,1,{2002,10,13}});
-    // insertNodeInTail_t(t,(Teacher){"123456","123456",4,1,{2002,10,13}});
-    // saveTeacherToFile(t,"teacher.txt");
-    // TeaNode *t1=createLinkList_t();
-    // loadTeacherFromFile(t1,"teacher.txt");
-    // travelLinkList_t(t1);
-    // // printf("%s\n",test.name);
-    // travelLinkList_t(t);
-    // /*销毁一个指定节点*/
-    // delNode_t(t,2);
-    // travelLinkList_t(t);
-    // printf("***********\n");
-    // insertNodeInTail_t(t,(Teacher){"234","234",2,1,{2002,10,13}});
-    // travelLinkList_t(t);
-    // delLinkList_t(t);
-    /********************************************************************* */
-    /***************************学生链表测试****************************** */
-    // StuNode *s=newLinkList_s();
-    // insertNodeInHead_s(s,(Stu){"123456","123456",1,1,{2002,10,13},100,100,100});
-    // insertNodeInTail_s(s,(Stu){"123456","123456",2,1,{2002,10,13},100,100,100});
-    // insertNodeInTail_s(s,(Stu){"123456","123456",3,1,{2002,10,13},100,100,100});
-    // insertNodeInTail_s(s,(Stu){"123456","123456",4,1,{2002,10,13},100,100,100});
-    // saveStudentToFile(s,"student.txt");
-    // StuNode *s1=newLinkList_s();
-    // loadStudentFromFile(s1,"student.txt");
-    // travelLinkList_s(s1);
-    // travelList_s(s);
-    // delNode_s(s,2);
-    // travelList_s(s);
-    // delLinkList_s(s);
-    /*********************************************************************** */
-    /*********************管理员模块测试********************************** */
-    // Admin a={"admin","admin123"};
-    // saveAdminToFile(a,"admin.txt");
-    // loadAdminFromFile(&a,"admin.txt");
-    // printf("%s ",a.name);
-    // printf("%s ",a.password);
-    /*********************************************************************** */
-    /****************************view模块测试 *********************************/
-    // char ch;
-    // while((ch=getOperation())!='q'){
-    //     printf("%c\n",ch);
-    // }
-    // char password[20];
-    // getPassword(password);
-    // printf("%s\n",password);
-    /************************************************************************** */
-    /************************************主逻辑 */
     while(1){
         printMainPage();
         switch(mainPageInputJudge()){
@@ -69,14 +16,12 @@ int main(){
                 adminPage();
                 break;
             case '2':
-                printTeacherPage();
+                teacherLogin();
                 break;
             case '3':
-                printStudentPage();
+                studentLogin();
                 break;
         }
-    
-        getchar();
     }
     return 0;
 }
@@ -84,9 +29,9 @@ void adminPage(){
     /*从文件中读取管理员信息*/
     Admin admintemp;
     TeaNode *t=createLinkList_t();
-    int length=loadTeacherFromFile(t,"teacher.txt");
+    int teaLength=loadTeacherFromFile(t,"teacher.txt");
     int id=-1;
-    Teacher tea;
+    Teacher teatemp;
     loadAdminFromFile(&admintemp,"admin.txt");
     if(judgePasword(admintemp.password)==-1){
         return;
@@ -97,25 +42,35 @@ void adminPage(){
         switch(lable){
             case '1':
             system("cls");
-            printf("请输入原密码:");
+            printf("需要输入原密码！\n");
             if(judgePasword(admintemp.password)==1){
-                printf("设置新密码:");
+                printf("设置新密码\n");
                 getPassword(admintemp.password);
                 printf("密码修改成功\n");
+                _getch();
             }
             break;
             case '2':
-            tea=inputTeacher(&length);
-            insertNodeInTail_t(t,tea);
+            teatemp=inputTeacher(&teaLength);
+            insertNodeInTail_t(t,teatemp);
+            printf("添加完成");
+            _getch();
             case '3':
             system("cls");
-            travelLinkList_t(t);
+            printAllNode_t(t);
             break;
             case '4':
-            system("cls");
-            printf("根据工号删除教师,请输入教师的工号:\n");
-            scanf("%d",&id);
+            printAllNode_t(t);
+            printf("根据工号删除教师,请输入教师的工号:");
+            if(scanf("%d",&id)!=1){
+                printf("非法输入\n");
+                flushInput();
+                _getch();
+                break;
+            }
+            flushInput();
             if(delNode_t(t,id)==1){
+                teaLength--;
                 printf("销毁成功\n");
             }else{
                 printf("未找到\n");
@@ -127,7 +82,6 @@ void adminPage(){
         }
         if(lable=='q')
         break;
-        getchar();
     }
     saveTeacherToFile(t,"teacher.txt");
     saveAdminToFile(admintemp,"admin.txt");
@@ -136,7 +90,7 @@ void adminPage(){
 void teacherLogin(){
     TeaNode *t=createLinkList_t();
     StuNode *s=createLinkList_s();
-    int teaLength=loadTeacherFromFile(t,"teacher.txt");
+    loadTeacherFromFile(t,"teacher.txt");
     int stuLength=loadStudentFromFile(s,"student.txt");
     /*登陆验证*/
     /*保存登陆节点*/
@@ -147,11 +101,111 @@ void teacherLogin(){
     return;
     }
     while(1){
-
+        printTeacherPage();
+        char ch=teacherPageInputJudge();
+        switch(ch){
+            case '1':
+            system("cls");
+            printf("需要原密码\n");
+            if(judgePasword(p->data.passWord)==1){
+                printf("设置新密码\n");
+                getPassword(p->data.passWord);
+                printf("密码修改成功\n");
+                _getch();
+                break;
+            }else{
+                printf("错误超过3次\n");
+                getchar();
+            }
+            break;
+            case '2':
+            printOneNode_t(p);
+            break;
+            case '3':
+            addNewStudent(s,&stuLength);
+            break;
+            case '4':
+            system("cls");
+            printf("现有学生\n");
+            printAllNode_s(s);
+            printf("根据学号删除,请输入学生的学号:\n");
+            if(s->next==NULL){
+                printf("没有学生可删除\n");
+                _getch();
+            }
+            int id;
+            scanf("%d",&id);
+            flushInput();
+            if(delNode_s(s,id)==1){
+                stuLength--;
+                printf("销毁成功\n");
+            }else{
+                printf("未找到\n");
+            }
+            getchar();
+            break;
+            case '5':
+            if(s->next==NULL){
+                printf("没有学生\n");
+                _getch();
+                break;
+            }
+            printOneStudentByID(s);
+            break;
+            case '6':           
+            changeStudentByTeacher(s);
+            break;
+            case '7':
+            printStudentByID(s,stuLength);
+            break;
+            case '8':
+            printStudentByScore(s,stuLength);
+            break;
+        }
+        if(ch=='q')
+            break;
     }
     saveStudentToFile(s,"student.txt");
     saveTeacherToFile(t,"teacher.txt");
     delLinkList_s(s);
     delLinkList_t(t);
+    p=NULL;
+}
+/*学生登陆及其操作*/
+void studentLogin(){
+    StuNode *s=createLinkList_s();
+    loadStudentFromFile(s,"student.txt");
+    StuNode *p=studentLoginJudge(s);
+    if(p==NULL){
+        delLinkList_s(s);
+        return;
+    }
+    while(1){
+        printStudentPage();
+        char ch=studentPageInputPage();
+        switch(ch){
+            case '1':
+            system("cls");
+            printf("请输入原密码:");
+            if(judgePasword(p->data.password)==1){
+                printf("设置新密码:");
+                getPassword(p->data.password);
+                printf("密码修改成功\n");
+                _getch();
+                break;
+            }else{
+                printf("错误超过3次\n");
+                _getch();
+            }
+            break;
+            case '2':
+            printOneNode_s(p);
+            break;
+        }
+        if(ch=='q')
+            break;
+    }
+    saveStudentToFile(s,"student.txt");
+    free(p);
     p=NULL;
 }

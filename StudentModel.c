@@ -45,7 +45,7 @@ int delNode_s(StuNode *s,int id){
     while(s->next!=NULL){
         if(s->next->data.id==id){
             s->next=s->next->next;
-            return 0;
+            return 1;
         }
         s=s->next;
     }

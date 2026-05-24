@@ -50,13 +50,13 @@ int delNode_t(TeaNode *t,int id){
     }
     return -1;
 }
-/*头插法插入节点*/
-int insertNodeInHead_t(TeaNode *t,Teacher data){
-    TeaNode *node=newNode_t(data);
-    node->next=t->next;
-    t->next=node;
-    return 0;
-}
+// /*头插法插入节点*/
+// int insertNodeInHead_t(TeaNode *t,Teacher data){
+//     TeaNode *node=newNode_t(data);
+//     node->next=t->next;
+//     t->next=node;
+//     return 0;
+// }
 /*尾插法插入节点*/
 int insertNodeInTail_t(TeaNode *t,Teacher data){
     TeaNode *node=newNode_t(data);
