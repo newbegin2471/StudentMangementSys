@@ -121,6 +121,9 @@ void adminPage(){
                 printf("未找到\n");
             }
             break;
+            case '5':
+            changeTeacherByAdmin(t);
+            break;
         }
         if(lable=='q')
         break;
@@ -129,4 +132,26 @@ void adminPage(){
     saveTeacherToFile(t,"teacher.txt");
     saveAdminToFile(admintemp,"admin.txt");
     delLinkList_t(t);
+}
+void teacherLogin(){
+    TeaNode *t=createLinkList_t();
+    StuNode *s=createLinkList_s();
+    int teaLength=loadTeacherFromFile(t,"teacher.txt");
+    int stuLength=loadStudentFromFile(s,"student.txt");
+    /*登陆验证*/
+    /*保存登陆节点*/
+    TeaNode *p=teacherLoginJudge(t);
+    if(p==NULL){
+    delLinkList_s(s);
+    delLinkList_t(t);
+    return;
+    }
+    while(1){
+
+    }
+    saveStudentToFile(s,"student.txt");
+    saveTeacherToFile(t,"teacher.txt");
+    delLinkList_s(s);
+    delLinkList_t(t);
+    p=NULL;
 }

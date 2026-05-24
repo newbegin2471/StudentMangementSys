@@ -17,7 +17,7 @@ typedef struct StuNode{
     struct StuNode *next;
 }StuNode;
 /*创建空链表*/
-StuNode *newLinkList_s();
+StuNode *createLinkList_s();
 /*销毁整个学生链表*/
 void delLinkList_s(StuNode *s);
 /*创建一个新节点*/

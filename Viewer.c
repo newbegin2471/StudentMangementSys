@@ -265,3 +265,106 @@ Teacher inputTeacher(int *length){
     getBirthDate(&tea.birth);
     return tea;
 }
+/*修改教师信息界面*/
+char changeTeacherPage(){
+    system("cls");
+    printf("==================================\n");
+    printf("1.修改姓名\n");
+    printf("2.修改密码\n");
+    printf("3.修改性别\n");
+    printf("4.修改出生日期\n");
+    printf("==================================\n");
+    printf("请输入合法的操作数：\n");
+    do{
+        char ch=(char)_getch();
+        if((ch>='1'&&ch<='2')||ch=='q')
+            return ch;
+        printf("请输入合法的操作!\n");
+    }while(1);
+}
+/*修改教师信息*/
+void changeTeacherByAdmin(TeaNode *t){
+    printf("请输入教师工号：\n");
+    int id;
+    scanf("%d",&id);
+    TeaNode *p=findNodeByID_t(t,id);
+    if(p==NULL){
+        printf("未找到\n");
+        return;
+    }
+    while(1){
+    char ch=changeTeacherPage();
+        switch(ch){
+            case '1':
+            system("cls");
+            char name[N];
+            getName(name);
+            strcpy(p->data.name,name);
+            printf("修改成功\n");
+            getchar();
+            break;
+            case '2':
+            system("cls");
+            char pass[N];
+            getPassword(pass);
+            strcpy(p->data.passWord,pass);
+            printf("密码修改成功\n");
+            getchar();
+            break;
+            case '3':
+            system("cls");
+            int gender;
+            getGender(&gender);
+            p->data.gender=gender;
+            getchar();
+            break;
+            case '4':
+            system("cls");
+            BirthDate date;
+            getBirthDate(&date);
+            p->data.birth=date;
+            getchar();
+            break;
+        }
+        if(ch=='q')
+            break;
+    }
+}
+/*获取工号或者学号*/
+void getID(int *id){
+    while(1){
+        if(scanf("%d",id)==1){
+            if(*id<202600||*id>202699){
+                printf("请重新输入!\n");
+            }else{
+                return;
+            }
+        }
+    }
+}
+/*教师登陆验证,成功返回教师节点的指针，失败返回NULL*/
+TeaNode *teacherLoginJudge(TeaNode *t){
+    int id;
+    char password[N];
+    TeaNode *p;
+    printf("请输入工号:");
+    do{
+        if(scanf("%d",&id)==1){
+            if((p=findNodeByID_t(t,id))==NULL){
+                printf("未找到\n");
+                getchar();
+                return NULL;
+            }
+            printf("请输入密码\n");
+            if(judgePasword(p->data.passWord)==1){
+                return p;
+            }else{
+                printf("密码输入错误三次\n");
+                getchar();
+                return NULL;
+            }
+        }
+        printf("输入格式错误!\n");
+        while(getchar()!='\n');
+    }while(1);
+}

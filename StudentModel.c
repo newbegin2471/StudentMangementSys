@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 /*¥¥Ω®ø’¡¥±Ì*/
-StuNode *newLinkList_s(){
+StuNode *createLinkList_s(){
     StuNode *node=(StuNode *)malloc(sizeof(StuNode));
     if(node==NULL){
         perror("Stu node malloc error\n");

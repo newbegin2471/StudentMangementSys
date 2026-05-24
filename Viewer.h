@@ -43,4 +43,10 @@ int getPassword(char *pass);
 int judgePasword(char *pass);
 /*添加教师信息,根据数字length自动分配工号*/
 Teacher inputTeacher(int *length);
+/*修改教师信息*/
+void changeTeacherByAdmin(TeaNode *t);
+/*获取工号或者学号*/
+void getID(int *id);
+/*教师登陆验证,成功返回教师节点的指针*/
+TeaNode *teacherLoginJudge(TeaNode *t);
 #endif
