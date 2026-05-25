@@ -9,6 +9,11 @@ typedef struct Date{
     int month;
     int day;
 }BirthDate;
-/*性别*/
-enum Gender{M,F};
+
+/*读取id函数*/
+void GetIDFromFile();
+void saveIDToFile();
+/*获取ID函数*/
+int  getStuID();
+int  getTeaID();
 #endif

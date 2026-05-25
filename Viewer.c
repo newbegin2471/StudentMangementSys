@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include "Viewer.h"
 #include "Controller.h"
+extern int stuID[];
+extern int teaID[];
 void flushInput() {
     while (getchar() != '\n');  // 一键清回车，超简单
 }
@@ -28,6 +30,7 @@ char mainPageInputJudge(){
         if(ch>='1'&&ch<='3'){
             return ch;
         }else if(ch=='q'){
+            saveIDToFile();
             exit(0);
         }
         printf("请按要求输入!\n");
@@ -224,7 +227,9 @@ Teacher inputTeacher(int *length){
     printf("请输入要添加的教师信息：\n");
     printf("工号自动分配\n");
     Teacher tea;
-    tea.id=2026*100+*length;
+    int i=getTeaID();
+    teaID[i]=1;
+    tea.id=2026*100+i;
     (*length)++;
     getName(tea.name);
     getPassword(tea.passWord);
@@ -270,7 +275,8 @@ void changeTeacherByAdmin(TeaNode *t){
             getName(name);
             strcpy(p->data.name,name);
             printf("修改成功\n");
-            getchar();
+            printf("按任意键继续......\n");
+            _getch();
             break;
             case '2':
             system("cls");
@@ -278,21 +284,26 @@ void changeTeacherByAdmin(TeaNode *t){
             getPassword(pass);
             strcpy(p->data.passWord,pass);
             printf("密码修改成功\n");
-            getchar();
+            printf("按任意键继续......\n");
+            _getch();
             break;
             case '3':
             system("cls");
             int gender;
             getGender(&gender);
             p->data.gender=gender;
-            getchar();
+            printf("修改成功\n");
+            printf("按任意键继续......\n");
+            _getch();
             break;
             case '4':
             system("cls");
             BirthDate date;
             getBirthDate(&date);
             p->data.birth=date;
-            getchar();
+            printf("修改成功\n");
+            printf("按任意键继续......\n");
+            _getch();
             break;
         }
         if(ch=='q')
@@ -323,19 +334,23 @@ TeaNode *teacherLoginJudge(TeaNode *t){
         if(judge==1){
             if((p=findNodeByID_t(t,id))==NULL){
                 printf("未找到\n");
-                getchar();
+                printf("按任意键继续......\n");
+                _getch();
                 return NULL;
             }
             if(judgePasword(p->data.passWord)==1){
                 return p;
             }else{
                 printf("密码输入错误三次\n");
-                getchar();
+                printf("按任意键继续......\n");
+                _getch();
                 return NULL;
             }
         }
         printf("输入格式错误!\n");
-        while(getchar()!='\n');
+        printf("重新输入\n");
+        printf("按任意键继续......\n");
+        _getch();
     }while(1);
 }
 /*打印单个教师节点*/
@@ -353,7 +368,8 @@ void printOneNode_t(TeaNode *t){
     printf("%4d-%02d-%02d",t->data.birth.year,t->data.birth.month,t->data.birth.day);
     printf("%-20s\n",t->data.passWord);
     printf("============================================================\n");
-    getchar();
+    printf("按任意键继续......\n");
+    _getch();
 }
 /*打印所有教师节点*/
 void printAllNode_t(TeaNode *t){
@@ -395,7 +411,8 @@ void printOneNode_s(StuNode *s){
     printf("%-6.1f",s->data.english);
     printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.chinese+s->data.english);
     printf("==========================================================================================\n");
-    getchar();
+    printf("按任意键继续......\n");
+    _getch();
 }
 /*打印所有学生节点信息*/
 void printAllNode_s(StuNode *s){
@@ -428,7 +445,10 @@ void addNewStudent(StuNode *s,int *length){
     Stu stu;
     printf("请输入要添加的学生信息\n");
     printf("学号自动分配\n");
-    stu.id=2026*10000+*length;
+    int i=getStuID();
+    stuID[i]=1;
+    stu.id=2026*10000+i;
+    // stu.id=2026*10000+*length;
     (*length)++;
     getName(stu.name);
     getGender(&stu.gender);
@@ -451,7 +471,8 @@ void printOneStudentByID(StuNode *s){
         StuNode *p=findNodeByID_s(s,id);
         if(p==NULL){
             printf("未找到\n");
-            getchar();
+            printf("按任意键继续......\n");
+            _getch();
             return;
         }
         printOneNode_s(p);
@@ -498,7 +519,8 @@ void changeStudentByTeacher(StuNode *s){
         getName(name);
         strcpy(p->data.name,name);
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;    
         case '2':
         system("cls");
@@ -506,7 +528,8 @@ void changeStudentByTeacher(StuNode *s){
         getPassword(pass);
         strcpy(p->data.password,pass);
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;
         case '3':
         system("cls");
@@ -514,7 +537,8 @@ void changeStudentByTeacher(StuNode *s){
         getGender(&gender);
         p->data.gender=gender;
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;
         case '4':
         system("cls");
@@ -522,7 +546,8 @@ void changeStudentByTeacher(StuNode *s){
         getBirthDate(&date);
         p->data.date=date;
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;
         case '5':
         system("cls");
@@ -530,7 +555,8 @@ void changeStudentByTeacher(StuNode *s){
         getFloat(&c,"语文");
         p->data.chinese=c;
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;
         case '6':
         system("cls");
@@ -538,14 +564,16 @@ void changeStudentByTeacher(StuNode *s){
         getFloat(&m,"数学");
         p->data.math=m;
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         break;
         case '7':{
         float e;
         getFloat(&e,"英语");
         p->data.english=e;
         printf("修改成功\n");
-        getchar();
+        printf("按任意键继续......\n");
+        _getch();
         }
         break;
         }
@@ -596,7 +624,8 @@ void printStudentByID(StuNode *s,int length){
     printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
     }
     printf("==========================================================================================\n");
-    getchar();
+    printf("按任意键继续......\n");
+    _getch();
 }
 /*按总分从高到低查看所有学生信息*/
 void printStudentByScore(StuNode *s,int length){
@@ -644,7 +673,8 @@ void printStudentByScore(StuNode *s,int length){
     printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
     }
     printf("==========================================================================================\n");
-    getchar();
+    printf("按任意键继续......\n");
+    _getch();
 }
 /*学生登陆验证*/
 StuNode *studentLoginJudge(StuNode *s){
@@ -657,18 +687,22 @@ StuNode *studentLoginJudge(StuNode *s){
         if(judge==1){
             if((p=findNodeByID_s(s,id))==NULL){
                 printf("未找到\n");
-                getchar();
+                printf("按任意键继续......\n");
+                _getch();
                 return NULL;
             }
             if(judgePasword(p->data.password)==1){
                 return p;
             }else{
                 printf("密码输入错误三次\n");
-                getchar();
+                printf("按任意键继续......\n");
+                _getch();
                 return NULL;
             }
         }
         printf("输入格式错误!\n");
-        while(getchar()!='\n');
+        printf("按任意键继续......\n");
+        _getch();
+        printf("请重新输入\n");
     }while(1);
 }

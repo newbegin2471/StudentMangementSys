@@ -8,7 +8,10 @@
 void adminPage();
 void teacherLogin();
 void studentLogin();
+int teaID[100]={0};
+int stuID[10000]={0};
 int main(){
+    GetIDFromFile();
     while(1){
         printMainPage();
         switch(mainPageInputJudge()){
@@ -70,6 +73,7 @@ void adminPage(){
             }
             flushInput();
             if(delNode_t(t,id)==1){
+                teaID[id%100]=0;
                 teaLength--;
                 printf("销毁成功\n");
             }else{
@@ -115,7 +119,8 @@ void teacherLogin(){
                 break;
             }else{
                 printf("错误超过3次\n");
-                getchar();
+                printf("按任意键继续......\n");
+                _getch();
             }
             break;
             case '2':
@@ -139,11 +144,13 @@ void teacherLogin(){
             flushInput();
             if(delNode_s(s,id)==1){
                 stuLength--;
+                stuID[id%10000]=0;
                 printf("销毁成功\n");
             }else{
                 printf("未找到\n");
             }
-            getchar();
+            printf("按任意键继续......\n");
+            _getch();
             break;
             case '5':
             if(s->next==NULL){
@@ -209,4 +216,59 @@ void studentLogin(){
     saveStudentToFile(s,"student.txt");
     free(p);
     p=NULL;
+}
+/*读取id函数*/
+void GetIDFromFile(){
+    FILE *fp=fopen("teachaerID","rb");
+    if(fp==NULL){
+        printf("打开文件失败\n");
+        return;
+    }
+    fread(teaID,sizeof(teaID),4,fp);
+    fclose(fp);
+    fp=NULL;
+    fp=fopen("studentID","rb");
+    if(fp==NULL){
+        printf("打开文件失败\n");
+        return;
+    }
+    fread(stuID,sizeof(stuID),10000,fp);
+    fclose(fp);
+    fp=NULL;
+}
+
+void saveIDToFile(){
+    FILE *fp=fopen("teachaerID","wb");
+    if(fp==NULL){
+        printf("打开文件失败\n");
+        return;
+    }
+    fwrite(teaID,sizeof(teaID),4,fp);
+    fclose(fp);
+    fp=NULL;
+    fp=fopen("studentID","wb");
+    if(fp==NULL){
+        printf("打开文件失败\n");
+        return;
+    }
+    fwrite(stuID,sizeof(stuID),10000,fp);
+    fclose(fp);
+    fp=NULL;
+}
+/*获取ID函数*/
+int  getStuID(){
+    for(int i=0;i<10000;i++){
+        if(stuID[i]==0){
+            return i;
+        }
+    }   
+    return -1;
+}
+int getTeaID(){
+    for(int i=0;i<100;i++){
+        if(teaID[i]==0){
+            return i;
+        }
+    }
+    return -1;
 }
