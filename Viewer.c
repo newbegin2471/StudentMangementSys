@@ -62,7 +62,6 @@ char adminPageInputJudge(){
 }
 /*打印教师登陆界面*/
 void printTeacherPage(){
-    system("cls");
     printf("==================================\n");
     printf("1. 修改自身登录密码\n");
     printf("2. 查阅自身信息\n");
@@ -368,8 +367,6 @@ void printOneNode_t(TeaNode *t){
     printf("%4d-%02d-%02d",t->data.birth.year,t->data.birth.month,t->data.birth.day);
     printf("%-20s\n",t->data.passWord);
     printf("============================================================\n");
-    printf("按任意键继续......\n");
-    _getch();
 }
 /*打印所有教师节点*/
 void printAllNode_t(TeaNode *t){
@@ -409,7 +406,7 @@ void printOneNode_s(StuNode *s){
     printf("%-6.1f",s->data.chinese);
     printf("%-6.1f",s->data.math);
     printf("%-6.1f",s->data.english);
-    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.chinese+s->data.english);
+    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.english);
     printf("==========================================================================================\n");
     printf("按任意键继续......\n");
     _getch();
@@ -433,7 +430,7 @@ void printAllNode_s(StuNode *s){
     printf("%-6.1f",s->data.chinese);
     printf("%-6.1f",s->data.math);
     printf("%-6.1f",s->data.english);
-    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.chinese+s->data.english);
+    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.english);
     }
     printf("==========================================================================================\n");
     _getch();
@@ -449,7 +446,6 @@ void addNewStudent(StuNode *s,int *length){
     stuID[i]=1;
     stu.id=2026*10000+i;
     // stu.id=2026*10000+*length;
-    (*length)++;
     getName(stu.name);
     getGender(&stu.gender);
     getBirthDate(&stu.date);

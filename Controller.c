@@ -105,6 +105,7 @@ void teacherLogin(){
     return;
     }
     while(1){
+        printOneNode_t(p);
         printTeacherPage();
         char ch=teacherPageInputJudge();
         switch(ch){
@@ -125,6 +126,7 @@ void teacherLogin(){
             break;
             case '2':
             printOneNode_t(p);
+            _getch();
             break;
             case '3':
             addNewStudent(s,&stuLength);
