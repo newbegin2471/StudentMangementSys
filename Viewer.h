@@ -2,25 +2,6 @@
 #include "StudentModel.h"
 #ifndef _VIEW_H_
 #define _VIEW_H_
-// /*定义一个栈用于保存操作信息*/
-// #define stackSize 10
-// typedef int OperationData;
-// typedef struct Operation{
-//     OperationData data[stackSize];
-//     int top;
-// }OperationStack;
-
-// /*创建一个栈*/
-// OperationStack *createStack();
-// /*判断栈是否为空*/
-// int isEmpty(OperationStack *s);
-// /*入栈*/
-// int pushStack(OperationStack *s, OperationData data);
-// /*出栈*/
-// OperationData popStack(OperationStack *s);
-// /*销毁栈*/
-// void delStack(OperationStack *s);
-/******************************************************* */
 /*刷新函数，用于刷新缓冲区*/
 void flushInput();
 /*打印主界面*/
@@ -63,7 +44,7 @@ void printOneNode_s(StuNode *s);
 void printAllNode_s(StuNode *s);
 /*添加新学生*/
 void addNewStudent(StuNode *s,int *length);
-/*插阅指定学生信息*/
+/*查阅指定学生信息*/
 void printOneStudentByID(StuNode *s);
 /*修改学生信息*/
 void changeStudentByTeacher(StuNode *s);
@@ -71,8 +52,6 @@ void changeStudentByTeacher(StuNode *s);
 void printStudentByScore(StuNode *s,int length);
 /*按学号打印输出信息*/
 void printStudentByID(StuNode *s,int length);
-/***********************学生********************* */
 /*学生登陆验证*/
 StuNode *studentLoginJudge(StuNode *s);
-
 #endif

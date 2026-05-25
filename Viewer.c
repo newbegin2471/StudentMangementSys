@@ -10,44 +10,6 @@ void flushInput() {
 }
 /*闰年天数*/
 int monthInyear[12]={31,28,31,30,31,30,31,31,30,31,30,31};
-// /*创建一个栈*/
-// OperationStack *createStack(){
-//     OperationStack *s=(OperationStack *)malloc(sizeof(OperationStack));
-//     if(s==NULL){
-//         perror("stack malloc error\n");
-//         return NULL;
-//     }
-//     s->top=-1;
-//     return s;
-// }
-// /*判断栈是否为空*/
-// int isEmpty(OperationStack *s){
-//     return s->top==-1;
-// }
-// /*入栈*/
-// int  pushStack(OperationStack *s, OperationData data){
-//     if((s->top+1)==stackSize){
-//         perror("栈已经满\n");
-//         return -1;
-//     }
-//     s->top++;
-//     s->data[s->top]=data;
-//     return 1;
-// }
-// /*出栈*/
-// OperationData popStack(OperationStack *s){
-//     if(s->top==-1){
-//         perror("栈为空\n");
-//         return -1;
-//     }
-//     s->top--;
-//     return s->data[s->top+1];
-// }
-// /*销毁栈*/
-// void delStack(OperationStack *s){
-//     free(s);
-//     s=NULL;
-// }
 /*打印主界面*/
 void printMainPage(){
     system("cls");
@@ -137,17 +99,6 @@ char studentPageInputPage(){
         printf("请输入合法的操作!\n");
     }while(1);
 }
-// /*按键操作函数*/
-// char getOperation(){
-//     char ch;
-//     ch=(char)_getch();
-//     while(1){
-//         if(isalnum(ch)){
-//             return ch;
-//         }
-//         ch=(char)_getch();
-//     }
-// }
 /*密码输入函数*/
 int getPassword(char *pass){
     int len=0;
@@ -428,8 +379,8 @@ void printAllNode_t(TeaNode *t){
 /*打印单个学生节点信息*/
 void printOneNode_s(StuNode *s){
     system("cls");
-    printf("========================================================================\n");
-    printf("%-10s%-20s%-4s%-10s%-20s%-4s%-4s%-4s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语");
+    printf("==========================================================================================\n");
+    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
     printf("%-10d",s->data.id);
     printf("%-20s",s->data.name);
     if(s->data.gender==0){
@@ -437,19 +388,20 @@ void printOneNode_s(StuNode *s){
     }else{
         printf("%-4s","女");
     }
-    printf("%4d-%02d-%02d",s->data.date.year,s->data.date.month,s->data.date.day);
+    printf("%4d-%02d-%02d  ",s->data.date.year,s->data.date.month,s->data.date.day);
     printf("%-20s",s->data.password);
-    printf("%4.1f",s->data.chinese);
-    printf("%4.1f",s->data.math);
-    printf("%4.1f\n",s->data.english);
-    printf("========================================================================\n");
+    printf("%-6.1f",s->data.chinese);
+    printf("%-6.1f",s->data.math);
+    printf("%-6.1f",s->data.english);
+    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.chinese+s->data.english);
+    printf("==========================================================================================\n");
     getchar();
 }
 /*打印所有学生节点信息*/
 void printAllNode_s(StuNode *s){
     system("cls");
-    printf("========================================================================\n");
-    printf("%-10s%-20s%-4s%-12s%-20s%-4s%-4s%-4s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语");
+    printf("==========================================================================================\n");
+    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
     while(s->next!=NULL){
         s=s->next;
     printf("%-10d",s->data.id);
@@ -461,11 +413,12 @@ void printAllNode_s(StuNode *s){
     }
     printf("%4d-%02d-%02d  ",s->data.date.year,s->data.date.month,s->data.date.day);
     printf("%-20s",s->data.password);
-    printf("%4.1f",s->data.chinese);
-    printf("%4.1f",s->data.math);
-    printf("%4.1f\n",s->data.english);
+    printf("%-6.1f",s->data.chinese);
+    printf("%-6.1f",s->data.math);
+    printf("%-6.1f",s->data.english);
+    printf("%-6.1f\n",s->data.chinese+s->data.math+s->data.chinese+s->data.english);
     }
-    printf("========================================================================\n");
+    printf("==========================================================================================\n");
     _getch();
 }
 /*添加新学生*/
@@ -487,6 +440,7 @@ void addNewStudent(StuNode *s,int *length){
     (*length)++;
     insertNodeInTail_s(s,stu);
 }
+/*查阅一个学生信息*/
 void printOneStudentByID(StuNode *s){
     system("cls");
     printf("需要输入学号");
@@ -495,7 +449,7 @@ void printOneStudentByID(StuNode *s){
         scanf("%d",&id);
         flushInput();
         StuNode *p=findNodeByID_s(s,id);
-        if(s==NULL){
+        if(p==NULL){
             printf("未找到\n");
             getchar();
             return;
@@ -506,7 +460,6 @@ void printOneStudentByID(StuNode *s){
 }
 /*修改学生信息界面及操作*/
 char changeStudentPage(){
-    system("cls");
     printf("==================================\n");
     printf("1.修改姓名\n");
     printf("2.修改密码\n");
@@ -530,17 +483,17 @@ void changeStudentByTeacher(StuNode *s){
     int id;
     scanf("%d",&id);
     flushInput();
-    while(getchar()!='\n');
     StuNode *p=findNodeByID_s(s,id);
     if(p==NULL){
         printf("未找到\n");
         return;
     }
     while(1){
+        printOneNode_s(p);
         char ch=changeStudentPage();
         switch(ch){
         case '1':
-        system("cls") ;
+        system("cls");
         char name[N];
         getName(name);
         strcpy(p->data.name,name);
@@ -625,10 +578,10 @@ void printStudentByID(StuNode *s,int length){
             break;
     }
     system("cls");
-    printf("==============================================================================\n");
-    printf("%-6s%-20s%-4s%-12s%-20s%-4s%-4s%-4s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语");
+    printf("==========================================================================================\n");
+    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
     for(int i=0;i<length;i++){
-    printf("%-6d",stuarray[i].id);
+    printf("%-10d",stuarray[i].id);
     printf("%-20s",stuarray[i].name);
     if(stuarray[i].gender==0){
         printf("%-4s","男");
@@ -637,11 +590,12 @@ void printStudentByID(StuNode *s,int length){
     }
     printf("%4d-%02d-%02d  ",stuarray[i].date.year,stuarray[i].date.month,stuarray[i].date.day);
     printf("%-20s",stuarray[i].password);
-    printf("%4.1f",stuarray[i].chinese);
-    printf("%4.1f",stuarray[i].math);
-    printf("%4.1f\n",stuarray[i].english);
+    printf("%-6.1f",stuarray[i].chinese);
+    printf("%-6.1f",stuarray[i].math);
+    printf("%-6.1f",stuarray[i].english);
+    printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
     }
-    printf("==============================================================================\n");
+    printf("==========================================================================================\n");
     getchar();
 }
 /*按总分从高到低查看所有学生信息*/
@@ -672,10 +626,10 @@ void printStudentByScore(StuNode *s,int length){
             break;
     }
     system("cls");
-    printf("========================================================================================\n");
-    printf("%-6s%-20s%-4s%-12s%-20s%-4s%-4s%-4s%-4s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
+    printf("==========================================================================================\n");
+    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
     for(int i=length-1;i>=0;i--){
-    printf("%-6d",stuarray[i].id);
+    printf("%-10d",stuarray[i].id);
     printf("%-20s",stuarray[i].name);
     if(stuarray[i].gender==0){
         printf("%-4s","男");
@@ -684,12 +638,12 @@ void printStudentByScore(StuNode *s,int length){
     }
     printf("%4d-%02d-%02d  ",stuarray[i].date.year,stuarray[i].date.month,stuarray[i].date.day);
     printf("%-20s",stuarray[i].password);
-    printf("%4.1f",stuarray[i].chinese);
-    printf("%4.1f",stuarray[i].math);
-    printf("%4.1f",stuarray[i].english);
-    printf("%4.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
+    printf("%-6.1f",stuarray[i].chinese);
+    printf("%-6.1f",stuarray[i].math);
+    printf("%-6.1f",stuarray[i].english);
+    printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
     }
-    printf("========================================================================================\n");
+    printf("==========================================================================================\n");
     getchar();
 }
 /*学生登陆验证*/

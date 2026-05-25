@@ -132,6 +132,7 @@ void teacherLogin(){
             if(s->next==NULL){
                 printf("没有学生可删除\n");
                 _getch();
+                break;
             }
             int id;
             scanf("%d",&id);
@@ -186,9 +187,9 @@ void studentLogin(){
         switch(ch){
             case '1':
             system("cls");
-            printf("请输入原密码:");
+            printf("需要原密码\n");
             if(judgePasword(p->data.password)==1){
-                printf("设置新密码:");
+                printf("设置新密码\n");
                 getPassword(p->data.password);
                 printf("密码修改成功\n");
                 _getch();
