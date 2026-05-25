@@ -132,7 +132,7 @@ int judgePasword(char *targetPass){
         if(strcmp(pass,targetPass)==0){
             return 1;
         }
-        printf("输入错误,请重新输入:");
+        printf("输入错误,请重新输入\n");
         timer++;
     }while(timer<3);
     printf("错误超过三次\n");
@@ -314,22 +314,8 @@ void changeTeacherByAdmin(TeaNode *t){
             break;
     }
 }
-/*获取工号或者学号*/
-// void getID(int *id){
-//     while(1){
-//         if(scanf("%d",id)==1){
-//             if(*id<202600||*id>202699){
-//                 printf("请重新输入!\n");
-//             }else{
-//                 return;
-//             }
-//         }
-//     }
-// }
-/*教师登陆验证,成功返回教师节点的指针，失败返回NULL*/
 TeaNode *teacherLoginJudge(TeaNode *t){
     int id;
-    // char password[N];
     TeaNode *p;
     printf("请输入工号:");
     do{
