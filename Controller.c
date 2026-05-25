@@ -17,12 +17,15 @@ int main(){
         switch(mainPageInputJudge()){
             case '1':
                 adminPage();
+                saveIDToFile();
                 break;
             case '2':
                 teacherLogin();
+                saveIDToFile();
                 break;
             case '3':
                 studentLogin();
+                saveIDToFile();
                 break;
         }
     }
@@ -105,7 +108,8 @@ void teacherLogin(){
     return;
     }
     while(1){
-        printOneNode_t(p);
+        system("cls");
+        printf("当前教师：%s\n",p->data.name);
         printTeacherPage();
         char ch=teacherPageInputJudge();
         switch(ch){
@@ -118,10 +122,6 @@ void teacherLogin(){
                 printf("密码修改成功\n");
                 _getch();
                 break;
-            }else{
-                printf("错误超过3次\n");
-                printf("按任意键继续......\n");
-                _getch();
             }
             break;
             case '2':
@@ -203,9 +203,6 @@ void studentLogin(){
                 printf("密码修改成功\n");
                 _getch();
                 break;
-            }else{
-                printf("错误超过3次\n");
-                _getch();
             }
             break;
             case '2':

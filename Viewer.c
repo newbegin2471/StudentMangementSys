@@ -127,14 +127,14 @@ int getPassword(char *pass){
 int judgePasword(char *targetPass){
     char pass[N];
     int timer=0;
-    do{
+    while(timer<3){
         getPassword(pass);
         if(strcmp(pass,targetPass)==0){
             return 1;
         }
-        printf("输入错误,请重新输入\n");
+        printf("输入错误\n");
         timer++;
-    }while(timer<3);
+    }
     printf("错误超过三次\n");
     printf("按任意键继续......\n");
     _getch();
@@ -332,12 +332,8 @@ TeaNode *teacherLoginJudge(TeaNode *t){
             }
             if(judgePasword(p->data.passWord)==1){
                 return p;
-            }else{
-                printf("密码输入错误三次\n");
-                printf("按任意键继续......\n");
-                _getch();
-                return NULL;
             }
+            return NULL;
         }
         printf("输入格式错误!\n");
         printf("重新输入\n");
@@ -357,7 +353,7 @@ void printOneNode_t(TeaNode *t){
     }else{
         printf("%-4s","女");
     }
-    printf("%4d-%02d-%02d",t->data.birth.year,t->data.birth.month,t->data.birth.day);
+    printf("%4d-%02d-%02d  ",t->data.birth.year,t->data.birth.month,t->data.birth.day);
     printf("%-20s\n",t->data.passWord);
     printf("============================================================\n");
 }
@@ -375,7 +371,7 @@ void printAllNode_t(TeaNode *t){
     }else{
         printf("%-4s","女");
     }
-    printf("%4d-%02d-%02d",t->data.birth.year,t->data.birth.month,t->data.birth.day);
+    printf("%4d-%02d-%02d  ",t->data.birth.year,t->data.birth.month,t->data.birth.day);
     printf("  ");
     printf("%-20s\n",t->data.passWord);
 }
@@ -584,7 +580,7 @@ void printStudentByScore(StuNode *s){
 StuNode *studentLoginJudge(StuNode *s){
     int id;
     StuNode *p;
-    printf("请输入工号:");
+    printf("请输入学号:");
     do{
         int judge=scanf("%d",&id);
         flushInput();
@@ -597,12 +593,8 @@ StuNode *studentLoginJudge(StuNode *s){
             }
             if(judgePasword(p->data.password)==1){
                 return p;
-            }else{
-                printf("密码输入错误三次\n");
-                printf("按任意键继续......\n");
-                _getch();
-                return NULL;
             }
+                return NULL;
         }
         printf("输入格式错误!\n");
         printf("按任意键继续......\n");
