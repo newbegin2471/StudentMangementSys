@@ -186,8 +186,8 @@ void getBirthDate(BirthDate *date){
         int judge=scanf("%d%d%d",&date->year,&date->month,&date->day);
         flushInput();
         if(judge==3){
-            if(date->year<2000||date->year>2026){
-                printf("请输入年份在合理区间里(2000-2026)\n");
+            if(date->year<1900||date->year>2026){
+                printf("请输入年份在合理区间里\n");
                 continue;
             }
             if(date->month<1||date->month>12){
@@ -221,9 +221,11 @@ void getFloat(float *score,char *str){
             if(*score<0||*score>100){
                 printf("成绩应该在1-100之间\n");
                 continue;
+            }else{
+                return;
             }
         }
-        break;
+        printf("输入不合法,重新输入\n");
     }
 }
 /*添加教师信息*/
@@ -252,7 +254,7 @@ char changeTeacherPage(){
     printf("请输入合法的操作数：\n");
     do{
         char ch=(char)_getch();
-        if((ch>='1'&&ch<='2')||ch=='q')
+        if((ch>='1'&&ch<='4')||ch=='q')
             return ch;
         printf("请输入合法的操作!\n");
     }while(1);
@@ -436,7 +438,6 @@ void addNewStudent(StuNode *s,int *length){
     int i=getStuID();
     stuID[i]=1;
     stu.id=2026*10000+i;
-    // stu.id=2026*10000+*length;
     getName(stu.name);
     getGender(&stu.gender);
     getBirthDate(&stu.date);
@@ -450,7 +451,7 @@ void addNewStudent(StuNode *s,int *length){
 /*查阅一个学生信息*/
 void printOneStudentByID(StuNode *s){
     system("cls");
-    printf("需要输入学号");
+    printf("需要输入学号:");
     int id;
     while(1){
         scanf("%d",&id);
