@@ -49,9 +49,9 @@ void printOneStudentByID(StuNode *s);
 /*修改学生信息*/
 void changeStudentByTeacher(StuNode *s);
 /*按总分从高到低查看所有学生信息*/
-void printStudentByScore(StuNode *s,int length);
+void printStudentByScore(StuNode *s);
 /*按学号打印输出信息*/
-void printStudentByID(StuNode *s,int length);
+void printStudentByID(StuNode *s);
 /*学生登陆验证*/
 StuNode *studentLoginJudge(StuNode *s);
 #endif

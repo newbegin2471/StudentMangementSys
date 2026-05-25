@@ -8,13 +8,15 @@
 extern int stuID[];
 extern int teaID[];
 void flushInput() {
-    while (getchar() != '\n');  // 一键清回车，超简单
+    while (getchar() != '\n');
 }
 /*闰年天数*/
 int monthInyear[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 /*打印主界面*/
 void printMainPage(){
     system("cls");
+    printf("==================================\n");
+    printf("主界面\n");
     printf("==================================\n");
     printf("请选择你的身份:\n");
     printf("1.管理员\n");
@@ -68,7 +70,7 @@ void printTeacherPage(){
     printf("3. 添加新学生\n");
     printf("4. 删除学生\n");
     printf("5. 查阅指定学生信息\n");
-    printf("6. 修改学生信息（姓名、性别、出生日期、三门功课成绩）\n");
+    printf("6. 修改学生信息\n");
     printf("7. 按学号从低到高查看所有学生信息\n");
     printf("8. 按总分从高到低查看所有学生信息\n");
     printf("==================================\n");
@@ -130,9 +132,12 @@ int judgePasword(char *targetPass){
         if(strcmp(pass,targetPass)==0){
             return 1;
         }
-        printf("\n输入错误,请重新输入:");
+        printf("输入错误,请重新输入:");
         timer++;
     }while(timer<3);
+    printf("错误超过三次\n");
+    printf("按任意键继续......\n");
+    _getch();
     return -1;
 }
 /*获取姓名，最长不超过19个字符*/
@@ -579,98 +584,14 @@ void changeStudentByTeacher(StuNode *s){
     }
 }
 /*按学号打印输出信息*/
-void printStudentByID(StuNode *s,int length){
-    Stu stuarray[length];
-    for(int i=0;i<length;i++){
-        s=s->next;
-        stuarray[i]=s->data;
-    }
-    /*排序*/
-    int lable=0;
-    Stu temp;
-    for(int i=0;i<length-1;i++){
-        lable=0;
-        for(int j=0;j<length-i-1;j++){
-            if(stuarray[j].id>stuarray[j+1].id){
-                temp=stuarray[j];
-                stuarray[j]=stuarray[j+1];
-                stuarray[j+1]=temp;
-                lable=1;
-            }
-        }
-        if(lable==0)
-            break;
-    }
-    system("cls");
-    printf("==========================================================================================\n");
-    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
-    for(int i=0;i<length;i++){
-    printf("%-10d",stuarray[i].id);
-    printf("%-20s",stuarray[i].name);
-    if(stuarray[i].gender==0){
-        printf("%-4s","男");
-    }else{
-        printf("%-4s","女");
-    }
-    printf("%4d-%02d-%02d  ",stuarray[i].date.year,stuarray[i].date.month,stuarray[i].date.day);
-    printf("%-20s",stuarray[i].password);
-    printf("%-6.1f",stuarray[i].chinese);
-    printf("%-6.1f",stuarray[i].math);
-    printf("%-6.1f",stuarray[i].english);
-    printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
-    }
-    printf("==========================================================================================\n");
-    printf("按任意键继续......\n");
-    _getch();
+void printStudentByID(StuNode *s){
+    bubbleSortByID(s);
+    printAllNode_s(s);
 }
 /*按总分从高到低查看所有学生信息*/
-void printStudentByScore(StuNode *s,int length){
-    Stu stuarray[length];
-    for(int i=0;i<length;i++){
-        s=s->next;
-        stuarray[i]=s->data;
-    }
-    /*排序*/
-    int lable=0;
-    Stu temp;
-    float sum1=0;
-    float sum2=0;
-    for(int i=0;i<length-1;i++){
-        lable=0;
-        for(int j=0;j<length-i-1;j++){
-            sum1=stuarray[j].chinese+stuarray[j].math+stuarray[j].english;
-            sum2=stuarray[j+1].chinese+stuarray[j+1].math+stuarray[j+1].english;
-            if(sum1>sum2){
-                temp=stuarray[j];
-                stuarray[j]=stuarray[j+1];
-                stuarray[j+1]=temp;
-                lable=1;
-            }
-        }
-        if(lable==0)
-            break;
-    }
-    system("cls");
-    printf("==========================================================================================\n");
-    printf("%-10s%-20s%-4s%-12s%-20s%-6s%-6s%-6s%-6s\n","学号","姓名","性别","出生日期","密码","语文","数学","英语","总分");
-    for(int i=length-1;i>=0;i--){
-    printf("%-10d",stuarray[i].id);
-    printf("%-20s",stuarray[i].name);
-    if(stuarray[i].gender==0){
-        printf("%-4s","男");
-    }else{
-        printf("%-4s","女");
-    }
-    printf("%4d-%02d-%02d  ",stuarray[i].date.year,stuarray[i].date.month,stuarray[i].date.day);
-    printf("%-20s",stuarray[i].password);
-    printf("%-6.1f",stuarray[i].chinese);
-    printf("%-6.1f",stuarray[i].math);
-    printf("%-6.1f",stuarray[i].english);
-    printf("%-6.1f\n",stuarray[i].chinese+stuarray[i].math+stuarray[i].english);
-    }
-    printf("==========================================================================================\n");
-    printf("按任意键继续......\n");
-    _getch();
+void printStudentByScore(StuNode *s){
+    bubbleSortByScore(s);
+    printAllNode_s(s);
 }
 /*学生登陆验证*/
 StuNode *studentLoginJudge(StuNode *s){

@@ -137,3 +137,48 @@ void travelLinkList_s(StuNode *s){
         printf("%f\n",s->data.english);
     }
 }
+
+void bubbleSortByID(StuNode *s){
+    if(s==NULL||s->next==NULL){
+        return;
+    }
+    StuNode *stop=NULL;
+    int swapped=0;
+    StuNode *h=NULL;
+    do{
+        h=s->next;
+        swapped=0;
+        while(h->next!=stop){
+            if(h->data.id>h->next->data.id){
+                Stu t=h->data;
+                h->data=h->next->data;
+                h->next->data=t;
+                swapped=1;
+            }
+            h=h->next;
+        }
+        stop=h;
+    }while(swapped);
+}
+void bubbleSortByScore(StuNode *s){
+    if(s==NULL||s->next==NULL){
+        return;
+    }
+    StuNode *stop=NULL;
+    int swapped=0;
+    StuNode *h=NULL;
+    do{
+        h=s->next;
+        swapped=0;
+        while(h->next!=stop){
+            if((h->data.chinese+h->data.math+h->data.english)<(h->next->data.chinese+h->next->data.math+h->next->data.english)){
+                Stu t=h->data;
+                h->data=h->next->data;
+                h->next->data=t;
+                swapped=1;
+            }
+            h=h->next;
+        }
+        stop=h;
+    }while(swapped);
+}

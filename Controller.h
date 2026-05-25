@@ -9,7 +9,6 @@ typedef struct Date{
     int month;
     int day;
 }BirthDate;
-
 /*¶ÁÈ¡idº¯Êý*/
 void GetIDFromFile();
 void saveIDToFile();

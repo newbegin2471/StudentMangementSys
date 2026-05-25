@@ -36,4 +36,7 @@ int saveStudentToFile(StuNode *s,const char *filename);
 int loadStudentFromFile(StuNode *s,const char *filename);
 /*±È¿˙¡¥±Ì*/
 void travelLinkList_s(StuNode *s);
+/*√∞≈›≈≈–Ú*/
+void bubbleSortByScore(StuNode *s);
+void bubbleSortByID(StuNode *s);
 #endif

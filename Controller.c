@@ -166,10 +166,10 @@ void teacherLogin(){
             changeStudentByTeacher(s);
             break;
             case '7':
-            printStudentByID(s,stuLength);
+            printStudentByID(s);
             break;
             case '8':
-            printStudentByScore(s,stuLength);
+            printStudentByScore(s);
             break;
         }
         if(ch=='q')

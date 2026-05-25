@@ -22,8 +22,6 @@ void delLinkList_t(TeaNode *t);
 TeaNode *newNode_t(Teacher data);
 /*销毁一个指定节点*/
 int delNode_t(TeaNode *t,int id);
-// /*头插法插入节点*/
-// int insertNodeInHead_t(TeaNode *t,Teacher data);
 /*尾插法插入节点*/
 int insertNodeInTail_t(TeaNode *t,Teacher data);
 /*根据id查找节点*/
